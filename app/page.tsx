@@ -187,6 +187,8 @@ export default function Home() {
           handleDeleteClick={handleDeleteClick}
           copyToClipboard={copyToClipboard}
           loading={tableLoading}
+          currentPage={currentPage}
+          pageSize={pageSize}
         />
 
         <Pagination

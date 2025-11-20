@@ -15,9 +15,11 @@ interface LinkTableProps {
   handleDeleteClick: (link: Link) => void
   copyToClipboard: (text: string) => void
   loading: boolean
+  currentPage: number
+  pageSize: number
 }
 
-export default function LinkTable({ filteredLinks, baseUrl, handleDeleteClick, copyToClipboard, loading }: LinkTableProps) {
+export default function LinkTable({ filteredLinks, baseUrl, handleDeleteClick, copyToClipboard, loading, currentPage, pageSize }: LinkTableProps) {
   const router = useRouter()
 
   return (
@@ -31,6 +33,7 @@ export default function LinkTable({ filteredLinks, baseUrl, handleDeleteClick, c
           <table className="w-full">
             <thead className="bg-gray-100">
               <tr>
+                <th className="p-3 text-left">S.No</th>
                 <th className="p-3 text-left">Short Code</th>
                 <th className="p-3 text-left">Original URL</th>
                 <th className="p-3 text-left">Clicks</th>
@@ -39,10 +42,11 @@ export default function LinkTable({ filteredLinks, baseUrl, handleDeleteClick, c
               </tr>
             </thead>
             <tbody>
-              {filteredLinks.map((link) => (
+              {filteredLinks.map((link, index) => (
                 <tr key={link.id} className="border-t">
+                  <td className="p-3">{(currentPage - 1) * pageSize + index + 1}</td>
                   <td className="p-3">
-                    <a href={`${baseUrl}/${link.shortCode}`} target="_blank" className="font-mono text-blue-500 hover:underline mr-2">
+                    <a href={`${baseUrl}/${link.shortCode}`} target="_blank" className="inline-block w-20 font-mono text-blue-500 hover:underline mr-2 truncate">
                       {link.shortCode}
                     </a>
                     <button
