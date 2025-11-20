@@ -33,6 +33,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize] = useState(10)
   const [total, setTotal] = useState(0)
+  const [tableLoading, setTableLoading] = useState(false)
 
   const router = useRouter()
 
@@ -43,6 +44,7 @@ export default function Home() {
   }, [currentPage])
 
   const fetchLinks = async (page: number = 1) => {
+    setTableLoading(true)
     try {
       const res = await fetch(`/api/links?page=${page}&limit=${pageSize}`)
       if (!res.ok) throw new Error('Failed to fetch links')
@@ -61,6 +63,7 @@ export default function Home() {
       setToast('Failed to load links')
       setTimeout(() => setToast(''), 3000)
     } finally {
+      setTableLoading(false)
       setLoading(false)
     }
   }
@@ -98,6 +101,8 @@ export default function Home() {
       }
       setCurrentPage(1)
       fetchLinks(1)
+      setToast('Link created successfully')
+      setTimeout(() => setToast(''), 3000)
       setOriginalUrl('')
       setShortCode('')
     } catch (err: any) {
@@ -181,6 +186,7 @@ export default function Home() {
           baseUrl={baseUrl}
           handleDeleteClick={handleDeleteClick}
           copyToClipboard={copyToClipboard}
+          loading={tableLoading}
         />
 
         <Pagination

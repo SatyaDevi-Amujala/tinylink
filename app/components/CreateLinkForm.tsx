@@ -51,7 +51,7 @@ export default function CreateLinkForm({
             setCodeError('')
           }}
           className="w-full p-2 border rounded"
-          placeholder="e.g., abc123"
+          placeholder="e.g., abc123 (6-8 alphanumeric characters)"
         />
         {codeError && <p className="text-red-500 text-sm mt-1">{codeError}</p>}
       </div>
